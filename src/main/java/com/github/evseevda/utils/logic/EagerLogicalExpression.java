@@ -1,5 +1,7 @@
 package com.github.evseevda.utils.logic;
 
+import java.util.Objects;
+
 /**
  * The main goal of this class is to replace native Java logic operators {@code (&&, ||, ^, !)}
  * with English equivalents.
@@ -18,6 +20,7 @@ public class EagerLogicalExpression {
     }
 
     private EagerLogicalExpression(EagerLogicalExpression root) {
+        Objects.requireNonNull(root);
         this.statement = root.statement;
     }
 
@@ -75,6 +78,7 @@ public class EagerLogicalExpression {
      * basis for constructing the subsequent chain of expressions
      */
     public static EagerLogicalExpression expr(EagerLogicalExpression root) {
+        Objects.requireNonNull(root);
         return new EagerLogicalExpression(root);
     }
 
@@ -95,6 +99,8 @@ public class EagerLogicalExpression {
      * basis for constructing the subsequent chain of expressions
      */
     public static EagerLogicalExpression allOf(boolean... expressions) {
+        Objects.requireNonNull(expressions);
+
         EagerLogicalExpression logicalExpression = new EagerLogicalExpression(true);
         for (boolean expression : expressions) {
             logicalExpression.statement &= expression;
@@ -119,6 +125,8 @@ public class EagerLogicalExpression {
      * basis for constructing the subsequent chain of expressions
      */
     public static EagerLogicalExpression anyOf(boolean... expressions) {
+        Objects.requireNonNull(expressions);
+
         EagerLogicalExpression logicalExpression = new EagerLogicalExpression(false);
         for (boolean expression : expressions) {
             logicalExpression.statement |= expression;
@@ -132,6 +140,8 @@ public class EagerLogicalExpression {
      * @return an EagerLogicalExpression object that can be used to further construct a chain of expressions.
      */
     public EagerLogicalExpression and(EagerLogicalExpression expression) {
+        Objects.requireNonNull(expression);
+
         statement &= expression.result();
         return this;
     }
@@ -152,6 +162,8 @@ public class EagerLogicalExpression {
      * @return an EagerLogicalExpression object that can be used to further construct a chain of expressions.
      */
     public EagerLogicalExpression or(EagerLogicalExpression expression) {
+        Objects.requireNonNull(expression);
+
         statement |= expression.result();
         return this;
     }
@@ -172,6 +184,8 @@ public class EagerLogicalExpression {
      * @return an EagerLogicalExpression object that can be used to further construct a chain of expressions.
      */
     public EagerLogicalExpression xor(EagerLogicalExpression expression) {
+        Objects.requireNonNull(expression);
+
         statement ^= expression.result();
         return this;
     }
@@ -192,6 +206,8 @@ public class EagerLogicalExpression {
      * @return an EagerLogicalExpression object that can be used to further construct a chain of expressions.
      */
     public static EagerLogicalExpression not(EagerLogicalExpression expression) {
+        Objects.requireNonNull(expression);
+
         return expr(!expression.result());
     }
 
