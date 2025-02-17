@@ -13,15 +13,15 @@ import java.util.Objects;
  */
 public class EagerLogicalExpression {
 
-    private boolean statement;
+    private boolean expressionResult;
 
     private EagerLogicalExpression(boolean root) {
-        this.statement = root;
+        this.expressionResult = root;
     }
 
     private EagerLogicalExpression(EagerLogicalExpression root) {
         Objects.requireNonNull(root);
-        this.statement = root.statement;
+        this.expressionResult = root.expressionResult;
     }
 
     /**
@@ -103,7 +103,7 @@ public class EagerLogicalExpression {
 
         EagerLogicalExpression logicalExpression = new EagerLogicalExpression(true);
         for (boolean expression : expressions) {
-            logicalExpression.statement &= expression;
+            logicalExpression.expressionResult &= expression;
         }
         return logicalExpression;
     }
@@ -129,7 +129,7 @@ public class EagerLogicalExpression {
 
         EagerLogicalExpression logicalExpression = new EagerLogicalExpression(false);
         for (boolean expression : expressions) {
-            logicalExpression.statement |= expression;
+            logicalExpression.expressionResult |= expression;
         }
         return logicalExpression;
     }
@@ -142,7 +142,7 @@ public class EagerLogicalExpression {
     public EagerLogicalExpression and(EagerLogicalExpression expression) {
         Objects.requireNonNull(expression);
 
-        statement &= expression.result();
+        expressionResult &= expression.result();
         return this;
     }
 
@@ -152,7 +152,7 @@ public class EagerLogicalExpression {
      * @return an EagerLogicalExpression object that can be used to further construct a chain of expressions.
      */
     public EagerLogicalExpression and(boolean expression) {
-        statement &= expression;
+        expressionResult &= expression;
         return this;
     }
 
@@ -164,7 +164,7 @@ public class EagerLogicalExpression {
     public EagerLogicalExpression or(EagerLogicalExpression expression) {
         Objects.requireNonNull(expression);
 
-        statement |= expression.result();
+        expressionResult |= expression.result();
         return this;
     }
 
@@ -174,7 +174,7 @@ public class EagerLogicalExpression {
      * @return an EagerLogicalExpression object that can be used to further construct a chain of expressions.
      */
     public EagerLogicalExpression or(boolean expression) {
-        statement |= expression;
+        expressionResult |= expression;
         return this;
     }
 
@@ -186,7 +186,7 @@ public class EagerLogicalExpression {
     public EagerLogicalExpression xor(EagerLogicalExpression expression) {
         Objects.requireNonNull(expression);
 
-        statement ^= expression.result();
+        expressionResult ^= expression.result();
         return this;
     }
 
@@ -196,7 +196,7 @@ public class EagerLogicalExpression {
      * @return an EagerLogicalExpression object that can be used to further construct a chain of expressions.
      */
     public EagerLogicalExpression xor(boolean expression) {
-        statement ^= expression;
+        expressionResult ^= expression;
         return this;
     }
 
@@ -224,7 +224,7 @@ public class EagerLogicalExpression {
      * @return the result of a logical expression
      */
     public boolean result() {
-        return statement;
+        return expressionResult;
     }
 
 }
