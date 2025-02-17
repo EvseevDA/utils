@@ -1,5 +1,7 @@
 package com.github.evseevda.utils.logic;
 
+import com.github.evseevda.EagerLogicalExpressionUsageExamples;
+
 import java.util.Objects;
 
 /**
@@ -8,7 +10,7 @@ import java.util.Objects;
  * It is assumed that in this case the code will acquire a more human-friendly appearance,
  * which will increase its readability.
  * @since 0.9.0
- * @see com.github.evseevda.UsageExamples
+ * @see EagerLogicalExpressionUsageExamples
  * @author EvseevDA
  */
 public class EagerLogicalExpression {

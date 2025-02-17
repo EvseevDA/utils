@@ -1,9 +1,12 @@
 package com.github.evseevda;
 
-import static com.github.evseevda.UsageExamples.Bank.*;
-import static com.github.evseevda.UsageExamples.Calendar.*;
-import static com.github.evseevda.UsageExamples.Human.isGoodMood;
-import static com.github.evseevda.UsageExamples.Weather.*;
+import java.util.function.Predicate;
+
+import static com.github.evseevda.EagerLogicalExpressionUsageExamples.Bank.*;
+import static com.github.evseevda.EagerLogicalExpressionUsageExamples.Calendar.isFavouriteMonth;
+import static com.github.evseevda.EagerLogicalExpressionUsageExamples.Calendar.isHoliday;
+import static com.github.evseevda.EagerLogicalExpressionUsageExamples.Human.isGoodMood;
+import static com.github.evseevda.EagerLogicalExpressionUsageExamples.Weather.*;
 import static com.github.evseevda.utils.logic.EagerLogicalExpression.allOf;
 import static com.github.evseevda.utils.logic.EagerLogicalExpression.expr;
 import static com.github.evseevda.utils.logic.LogicalPredicates.not;
@@ -15,7 +18,12 @@ import static com.github.evseevda.utils.logic.LogicalPredicates.not;
  * @see com.github.evseevda.utils.logic.LogicalPredicates
  * @author EvseevDA
  */
-public class UsageExamples {
+public class EagerLogicalExpressionUsageExamples {
+
+    public static void main(String[] args) {
+        Predicate<Object> predicate = ((Predicate<Object>) ((o) -> o instanceof String)).or((o) -> o instanceof Integer);
+        System.out.println(predicate.test("new ArrayList<>()"));
+    }
 
     /**
      * Shows how {@code EagerLogicalExpression} class can be used
