@@ -1,20 +1,27 @@
-package com.github.evseevda.utils;
+package com.github.evseevda.utils.logic;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
-import static com.github.evseevda.utils.logic.EagerLogicalExpression.*;
+import static com.github.evseevda.utils.logic.LazyLogicalExpression.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
-public class EagerLogicalExpressionTest {
+class LazyLogicalExpressionTest {
+
+    private static final NoArgsPredicate TRUE = () -> true;
+    private static final NoArgsPredicate FALSE = () -> false;
+
+    private NoArgsPredicate mockedPredicate = Mockito.mock(NoArgsPredicate.class);
 
     @Test
-    void whenSimpleLogicalExpressionResultIsReturned_ThenExpressionResultIsSame() {
+    void whenSimpleNativeLogicalExpressionResultIsReturned_ThenExpressionResultIsSame() {
         // arrange
         boolean expression = true;
         boolean expected = expression;
 
         // action
-        boolean actual = expr(true).result();
+        boolean actual = expr(TRUE).result();
 
         // assertion
         assertEquals(expected, actual);
@@ -27,7 +34,7 @@ public class EagerLogicalExpressionTest {
         boolean expected = expression;
 
         // action
-        boolean actual = expr(true).and(false).result();
+        boolean actual = expr(TRUE).and(FALSE).result();
 
         // assertion
         assertEquals(expected, actual);
@@ -40,7 +47,7 @@ public class EagerLogicalExpressionTest {
         boolean expected = expression;
 
         // action
-        boolean actual = allOf(true, true, true, true).result();
+        boolean actual = allOf(TRUE, TRUE, TRUE, TRUE).result();
 
         // assertion
         assertEquals(expected, actual);
@@ -53,7 +60,7 @@ public class EagerLogicalExpressionTest {
         boolean expected = expression;
 
         // action
-        boolean actual = allOf(true, true, true, false).result();
+        boolean actual = allOf(TRUE, TRUE, TRUE, FALSE).result();
 
         // assertion
         assertEquals(expected, actual);
@@ -66,7 +73,7 @@ public class EagerLogicalExpressionTest {
         boolean expected = expression;
 
         // action
-        boolean actual = expr(true).or(false).result();
+        boolean actual = expr(TRUE).or(TRUE).result();
 
         // assertion
         assertEquals(expected, actual);
@@ -79,7 +86,7 @@ public class EagerLogicalExpressionTest {
         boolean expected = expression;
 
         // action
-        boolean actual = anyOf(false, false, false, false).result();
+        boolean actual = anyOf(FALSE, FALSE, FALSE, FALSE).result();
 
         // assertion
         assertEquals(expected, actual);
@@ -92,7 +99,7 @@ public class EagerLogicalExpressionTest {
         boolean expected = expression;
 
         // action
-        boolean actual = anyOf(false, false, false, true).result();
+        boolean actual = anyOf(FALSE, FALSE, FALSE, TRUE).result();
 
         // assertion
         assertEquals(expected, actual);
@@ -105,7 +112,7 @@ public class EagerLogicalExpressionTest {
         boolean expected = expression;
 
         // action
-        boolean actual = expr(true).xor(false).result();
+        boolean actual = expr(TRUE).xor(FALSE).result();
 
         // assertion
         assertEquals(expected, actual);
@@ -118,7 +125,7 @@ public class EagerLogicalExpressionTest {
         boolean expected = expression;
 
         // action
-        boolean actual = expr(true).xor(expr(true).and(false)).result();
+        boolean actual = expr(TRUE).xor(expr(TRUE).and(FALSE)).result();
 
         // assertion
         assertEquals(expected, actual);
@@ -131,7 +138,7 @@ public class EagerLogicalExpressionTest {
         boolean expected = expression;
 
         // action
-        boolean actual = expr(true).and(false).or(true).result();
+        boolean actual = expr(TRUE).and(FALSE).or(TRUE).result();
 
         // assertion
         assertEquals(expected, actual);
@@ -144,7 +151,7 @@ public class EagerLogicalExpressionTest {
         boolean expected = expression;
 
         // action
-        boolean actual = not(true).result();
+        boolean actual = not(TRUE).result();
 
         // assertion
         assertEquals(expected, actual);
@@ -157,7 +164,7 @@ public class EagerLogicalExpressionTest {
         boolean expected = expression;
 
         // action
-        boolean actual = not(expr(true).and(false)).result();
+        boolean actual = not(expr(TRUE).and(FALSE)).result();
 
         // assertion
         assertEquals(expected, actual);
@@ -170,7 +177,7 @@ public class EagerLogicalExpressionTest {
         boolean expected = expression;
 
         // action
-        boolean actual = not(expr(true).and(false)).and(false).result();
+        boolean actual = not(expr(TRUE).and(FALSE)).and(FALSE).result();
 
         // assertion
         assertEquals(expected, actual);
@@ -183,7 +190,7 @@ public class EagerLogicalExpressionTest {
         boolean expected = expression;
 
         // action
-        boolean actual = (expr(true).and(false)).or(expr(true).and(true)).result();
+        boolean actual = (expr(TRUE).and(FALSE)).or(expr(TRUE).and(TRUE)).result();
 
         // assertion
         assertEquals(expected, actual);
@@ -196,7 +203,7 @@ public class EagerLogicalExpressionTest {
         boolean expected = expression;
 
         // action
-        boolean actual = (expr(true).and(false)).or(expr(true).and(false)).result();
+        boolean actual = (expr(TRUE).and(FALSE)).or(expr(TRUE).and(FALSE)).result();
 
         // assertion
         assertEquals(expected, actual);
@@ -209,7 +216,7 @@ public class EagerLogicalExpressionTest {
         boolean expected = expression;
 
         // action
-        boolean actual = (expr(true).and(true)).or(expr(true).and(false)).result();
+        boolean actual = (expr(TRUE).and(TRUE)).or(expr(TRUE).and(FALSE)).result();
 
         // assertion
         assertEquals(expected, actual);
@@ -222,7 +229,7 @@ public class EagerLogicalExpressionTest {
         boolean expected = expression;
 
         // action
-        boolean actual = (expr(true).and(false)).or(expr(true).and(false)).result();
+        boolean actual = (expr(TRUE).and(FALSE)).or(expr(TRUE).and(FALSE)).result();
 
         // assertion
         assertEquals(expected, actual);
@@ -243,11 +250,11 @@ public class EagerLogicalExpressionTest {
 
         // action
         boolean actual =
-                (expr(true).and(false))
-                        .or(expr(true).and(false))
+                (expr(TRUE).and(FALSE))
+                        .or(expr(TRUE).and(FALSE))
                         .and(
-                                expr(expr(true).and(true))
-                                        .or(expr(true).xor(false)))
+                                expr(expr(TRUE).and(TRUE))
+                                        .or(expr(TRUE).xor(FALSE)))
                         .result();
 
         // assertion
@@ -269,13 +276,13 @@ public class EagerLogicalExpressionTest {
 
         // action
         boolean actual =
-                (expr(true).and(false))
-                        .or(expr(true).and(false))
+                (expr(TRUE).and(FALSE))
+                        .or(expr(TRUE).and(FALSE))
                         .and(
                                 expr(
-                                        expr(true).and(false)
+                                        expr(TRUE).and(FALSE)
                                 )
-                                        .or(expr(true).xor(false))
+                                        .or(expr(TRUE).xor(FALSE))
                         )
                         .result();
 
@@ -298,13 +305,13 @@ public class EagerLogicalExpressionTest {
 
         // action
         boolean actual =
-                (expr(true).and(false))
-                        .or(expr(true).and(true))
+                (expr(TRUE).and(TRUE))
+                        .or(expr(TRUE).and(TRUE))
                         .and(
                                 expr(
-                                        expr(true).and(false)
+                                        expr(TRUE).and(FALSE)
                                 )
-                                        .or(expr(true).xor(false))
+                                        .or(expr(TRUE).xor(FALSE))
                         )
                         .result();
 
@@ -327,13 +334,13 @@ public class EagerLogicalExpressionTest {
 
         // action
         boolean actual =
-                (expr(true).and(false))
-                        .or(expr(true).and(true))
+                (expr(TRUE).and(FALSE))
+                        .or(expr(TRUE).and(TRUE))
                         .and(
                                 not(
                                         expr(
-                                                expr(true).and(false)
-                                        ).or(expr(true).xor(false))
+                                                expr(TRUE).and(FALSE)
+                                        ).or(expr(TRUE).xor(FALSE))
                                 )
                         )
                         .result();
@@ -358,19 +365,75 @@ public class EagerLogicalExpressionTest {
         // action
         boolean actual =
                 not(
-                        (expr(true).and(false))
-                                .or(expr(true).and(true))
+                        (expr(TRUE).and(FALSE))
+                                .or(expr(TRUE).and(TRUE))
                                 .and(
                                         not(
                                                 expr(
-                                                        expr(true).and(false)
-                                                ).or(expr(true).xor(false))
+                                                        expr(TRUE).and(FALSE)
+                                                ).or(expr(TRUE).xor(FALSE))
                                         )
                                 )
                 ).result();
 
         // assertion
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void whenMethodResultIsNotCalled_ThenExpressionsIsNotCalculating_T1() {
+        // arrange && action
+        when(mockedPredicate.and(any())).thenReturn(mockedPredicate);
+        when(mockedPredicate.or(any())).thenReturn(mockedPredicate);
+        when(mockedPredicate.xor(any())).thenReturn(mockedPredicate);
+        expr(mockedPredicate).and(mockedPredicate).or(mockedPredicate).xor(mockedPredicate);
+
+        // assertion
+        verify(mockedPredicate, times(0)).test();
+    }
+
+    @Test
+    void whenMethodResultIsNotCalled_ThenExpressionsIsNotCalculating_T2() {
+        // arrange && action
+        when(mockedPredicate.and(any())).thenReturn(mockedPredicate);
+        allOf(mockedPredicate, mockedPredicate, mockedPredicate, mockedPredicate);
+
+        // assertion
+        verify(mockedPredicate, times(0)).test();
+    }
+
+    @Test
+    void whenMethodResultIsNotCalled_ThenExpressionsIsNotCalculating_T3() {
+        // arrange && action
+        when(mockedPredicate.or(any())).thenReturn(mockedPredicate);
+        anyOf(mockedPredicate, mockedPredicate, mockedPredicate, mockedPredicate);
+
+        // assertion
+        verify(mockedPredicate, times(0)).test();
+    }
+
+    @Test
+    void whenMethodResultIsNotCalled_ThenExpressionsIsNotCalculating_T4() {
+        // arrange && action
+        when(mockedPredicate.and(any())).thenReturn(mockedPredicate);
+        when(mockedPredicate.or(any())).thenReturn(mockedPredicate);
+        when(mockedPredicate.xor(any())).thenReturn(mockedPredicate);
+        not(expr(mockedPredicate).and(mockedPredicate).or(mockedPredicate).xor(mockedPredicate));
+
+        // assertion
+        verify(mockedPredicate, times(0)).test();
+    }
+
+    @Test
+    void whenMethodResultIsNotCalled_ThenExpressionsIsNotCalculating_T5() {
+        // arrange && action
+        when(mockedPredicate.and(any())).thenReturn(mockedPredicate);
+        when(mockedPredicate.or(any())).thenReturn(mockedPredicate);
+        when(mockedPredicate.xor(any())).thenReturn(mockedPredicate);
+        expr(not(mockedPredicate)).and(not(mockedPredicate)).or(not(mockedPredicate)).xor(not(mockedPredicate));
+
+        // assertion
+        verify(mockedPredicate, times(0)).test();
     }
 
 }

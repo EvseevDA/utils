@@ -2,6 +2,7 @@ package com.github.evseevda.utils.logic;
 
 import com.github.evseevda.EagerLogicalExpressionUsageExamples;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -9,9 +10,10 @@ import java.util.Objects;
  * with English equivalents.
  * It is assumed that in this case the code will acquire a more human-friendly appearance,
  * which will increase its readability.
- * @since 0.9.0
- * @see EagerLogicalExpressionUsageExamples
+ *
  * @author EvseevDA
+ * @see EagerLogicalExpressionUsageExamples
+ * @since 0.9.0
  */
 public class EagerLogicalExpression {
 
@@ -33,7 +35,7 @@ public class EagerLogicalExpression {
      * <br> If expr is called once in a method call chain of this class,
      * the logical operators are called in direct order and in turn.
      * <blockquote>
-     *     <pre>
+     * <pre>
      *      {@code expr(condition1()).and(condition2()).result()}
      *     </pre>
      * </blockquote>
@@ -46,7 +48,7 @@ public class EagerLogicalExpression {
      * will be calculated, and then the results of the expressions will be combined.
      * When expr occurs more than twice, the situation is similar.
      * <blockquote>
-     *     <pre>
+     * <pre>
      *      {@code expr(condition1()).and(condition2()).or(expr(condition3()).or(condition4()))}
      *     </pre>
      * </blockquote>
@@ -54,6 +56,7 @@ public class EagerLogicalExpression {
      * <blockquote><pre>
      *      {@code (condition1() && condition2()) || (condition3() || condition4())}
      * </pre></blockquote>
+     *
      * @param root the first expression in a chain of expressions
      * @return an EagerLogicalExpression object that serves as the
      * basis for constructing the subsequent chain of expressions
@@ -67,7 +70,7 @@ public class EagerLogicalExpression {
      * <br> This method is needed to create nested expressions.
      * <br> Example:
      * <blockquote>
-     *     <pre>
+     * <pre>
      *      {@code expr(condition1()).and(expr(expr(condition2()).or(condition3()).and(not(condition4())))).result()}
      *     </pre>
      * </blockquote>
@@ -75,6 +78,7 @@ public class EagerLogicalExpression {
      * <blockquote><pre>
      *      {@code condition1() && ((condition2() || condition3()) && !condition4())}
      * </pre></blockquote>
+     *
      * @param root the first expression in a chain of expressions
      * @return an EagerLogicalExpression object that serves as the
      * basis for constructing the subsequent chain of expressions
@@ -88,7 +92,7 @@ public class EagerLogicalExpression {
      * Aggregates all passed expressions with logical AND.
      * <br> Example:
      * <blockquote>
-     *     <pre>
+     * <pre>
      *      {@code allOf(condition1(), condition2(), condition3()).result()}
      *     </pre>
      * </blockquote>
@@ -96,9 +100,12 @@ public class EagerLogicalExpression {
      * <blockquote><pre>
      *      {@code condition1() && condition2() && condition3()}
      * </pre></blockquote>
+     *
      * @param expressions which will be aggregated
      * @return an EagerLogicalExpression object that serves as the
-     * basis for constructing the subsequent chain of expressions
+     * basis for constructing the subsequent chain of expressions.
+     * <b><h3>If {@code expressions} is empty
+     * then returned expression will contain {@code true}.</h3>
      */
     public static EagerLogicalExpression allOf(boolean... expressions) {
         Objects.requireNonNull(expressions);
@@ -114,7 +121,7 @@ public class EagerLogicalExpression {
      * Aggregates all passed expressions with logical OR.
      * <br> Example:
      * <blockquote>
-     *     <pre>
+     * <pre>
      *      {@code anyOf(condition1(), condition2(), condition3()).result()}
      *     </pre>
      * </blockquote>
@@ -122,9 +129,12 @@ public class EagerLogicalExpression {
      * <blockquote><pre>
      *      {@code condition1() || condition2() || condition3()}
      * </pre></blockquote>
+     *
      * @param expressions which will be aggregated
      * @return an EagerLogicalExpression object that serves as the
-     * basis for constructing the subsequent chain of expressions
+     * basis for constructing the subsequent chain of expressions.
+     * <b><h3>If {@code expressions} is empty
+     * then returned expression will contain {@code false}.</h3>
      */
     public static EagerLogicalExpression anyOf(boolean... expressions) {
         Objects.requireNonNull(expressions);
@@ -138,6 +148,7 @@ public class EagerLogicalExpression {
 
     /**
      * Combines the current expression with the passed one using logical AND.
+     *
      * @param expression that will be merged with the current one
      * @return an EagerLogicalExpression object that can be used to further construct a chain of expressions.
      */
@@ -150,6 +161,7 @@ public class EagerLogicalExpression {
 
     /**
      * Combines the current expression with the passed one using logical AND.
+     *
      * @param expression that will be merged with the current one
      * @return an EagerLogicalExpression object that can be used to further construct a chain of expressions.
      */
@@ -160,6 +172,7 @@ public class EagerLogicalExpression {
 
     /**
      * Combines the current expression with the passed one using logical OR.
+     *
      * @param expression that will be merged with the current one
      * @return an EagerLogicalExpression object that can be used to further construct a chain of expressions.
      */
@@ -172,6 +185,7 @@ public class EagerLogicalExpression {
 
     /**
      * Combines the current expression with the passed one using logical OR.
+     *
      * @param expression that will be merged with the current one
      * @return an EagerLogicalExpression object that can be used to further construct a chain of expressions.
      */
@@ -182,6 +196,7 @@ public class EagerLogicalExpression {
 
     /**
      * Combines the current expression with the passed one using XOR.
+     *
      * @param expression that will be merged with the current one
      * @return an EagerLogicalExpression object that can be used to further construct a chain of expressions.
      */
@@ -194,6 +209,7 @@ public class EagerLogicalExpression {
 
     /**
      * Combines the current expression with the passed one using XOR.
+     *
      * @param expression that will be merged with the current one
      * @return an EagerLogicalExpression object that can be used to further construct a chain of expressions.
      */
@@ -204,6 +220,7 @@ public class EagerLogicalExpression {
 
     /**
      * Applies logical NOT to the given expression.
+     *
      * @param expression to which the operation will be applied
      * @return an EagerLogicalExpression object that can be used to further construct a chain of expressions.
      */
@@ -215,6 +232,7 @@ public class EagerLogicalExpression {
 
     /**
      * Applies logical NOT to the given expression.
+     *
      * @param expression to which the operation will be applied
      * @return an EagerLogicalExpression object that can be used to further construct a chain of expressions.
      */

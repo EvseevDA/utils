@@ -1,4 +1,4 @@
-package com.github.evseevda.utils;
+package com.github.evseevda.utils.logic;
 
 import com.github.evseevda.utils.logic.LogicalPredicates;
 import org.junit.jupiter.api.Assertions;

@@ -1,12 +1,10 @@
 package com.github.evseevda;
 
-import java.util.function.Predicate;
-
-import static com.github.evseevda.EagerLogicalExpressionUsageExamples.Bank.*;
-import static com.github.evseevda.EagerLogicalExpressionUsageExamples.Calendar.isFavouriteMonth;
-import static com.github.evseevda.EagerLogicalExpressionUsageExamples.Calendar.isHoliday;
-import static com.github.evseevda.EagerLogicalExpressionUsageExamples.Human.isGoodMood;
-import static com.github.evseevda.EagerLogicalExpressionUsageExamples.Weather.*;
+import static com.github.evseevda.DemoClasses.Bank.*;
+import static com.github.evseevda.DemoClasses.Calendar.isFavouriteMonth;
+import static com.github.evseevda.DemoClasses.Calendar.isHoliday;
+import static com.github.evseevda.DemoClasses.Human.isGoodMood;
+import static com.github.evseevda.DemoClasses.Weather.*;
 import static com.github.evseevda.utils.logic.EagerLogicalExpression.allOf;
 import static com.github.evseevda.utils.logic.EagerLogicalExpression.expr;
 import static com.github.evseevda.utils.logic.LogicalPredicates.not;
@@ -19,11 +17,6 @@ import static com.github.evseevda.utils.logic.LogicalPredicates.not;
  * @author EvseevDA
  */
 public class EagerLogicalExpressionUsageExamples {
-
-    public static void main(String[] args) {
-        Predicate<Object> predicate = ((Predicate<Object>) ((o) -> o instanceof String)).or((o) -> o instanceof Integer);
-        System.out.println(predicate.test("new ArrayList<>()"));
-    }
 
     /**
      * Shows how {@code EagerLogicalExpression} class can be used
@@ -74,60 +67,6 @@ public class EagerLogicalExpressionUsageExamples {
                         isGoodMood(), balance() >= amountNeeded()).result()
         ) {
             System.out.println("Can walk to shop");
-        }
-
-    }
-
-    static class Human {
-        public static boolean isGoodMood() {
-            return true;
-        }
-    }
-
-    static class Bank {
-
-        public static boolean userIsNotLocked() {
-            return true;
-        }
-
-        public static int balance() {
-            return 100;
-        }
-
-        public static int amountNeeded() {
-            return 99;
-        }
-
-    }
-
-    static class Calendar {
-
-        public static boolean isHoliday() {
-            return false;
-        }
-
-        public static boolean isFebruary() {
-            return true;
-        }
-
-        public static boolean isFavouriteMonth() {
-            return true;
-        }
-
-    }
-
-    static class Weather {
-
-        public static boolean isWinter() {
-            return true;
-        }
-
-        public static boolean isSunny() {
-            return false;
-        }
-
-        public static boolean isCold() {
-            return true;
         }
 
     }
