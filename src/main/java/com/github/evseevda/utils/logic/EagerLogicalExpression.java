@@ -2,7 +2,6 @@ package com.github.evseevda.utils.logic;
 
 import com.github.evseevda.EagerLogicalExpressionUsageExamples;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -12,6 +11,7 @@ import java.util.Objects;
  * which will increase its readability.
  *
  * @author EvseevDA
+ * @see LazyLogicalExpression
  * @see EagerLogicalExpressionUsageExamples
  * @since 0.9.0
  */
@@ -49,7 +49,7 @@ public class EagerLogicalExpression {
      * When expr occurs more than twice, the situation is similar.
      * <blockquote>
      * <pre>
-     *      {@code expr(condition1()).and(condition2()).or(expr(condition3()).or(condition4()))}
+     *      {@code expr(condition1()).and(condition2()).or(expr(condition3()).or(condition4())).result()}
      *     </pre>
      * </blockquote>
      * is equals to

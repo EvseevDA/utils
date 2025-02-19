@@ -1,24 +1,20 @@
 package com.github.evseevda.utils.logic;
 
-import com.github.evseevda.utils.logic.LogicalPredicates;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static com.github.evseevda.utils.logic.LogicalPredicates.*;
+import static com.github.evseevda.utils.logic.LogicalPredicates.not;
 
 public class LogicalPredicatesTest {
-
-    private static boolean TRUE = (1 == 1);
-    private static boolean FALSE = (1 == 2);
 
     @Test
     void whenNativeNotResultIsReturned_ThenLogicalPredicateNotResultIsSame_T1() {
         // arrange
-        boolean expression = !TRUE;
+        boolean expression = !true;
         boolean expected = expression;
 
         // action
-        boolean actual = not(TRUE);
+        boolean actual = not(true);
 
         // assertion
         Assertions.assertEquals(expected, actual);
@@ -27,11 +23,11 @@ public class LogicalPredicatesTest {
     @Test
     void whenNativeNotResultIsReturned_ThenLogicalPredicateNotResultIsSame_T2() {
         // arrange
-        boolean expression = !FALSE;
+        boolean expression = !false;
         boolean expected = expression;
 
         // action
-        boolean actual = not(FALSE);
+        boolean actual = not(false);
 
         // assertion
         Assertions.assertEquals(expected, actual);

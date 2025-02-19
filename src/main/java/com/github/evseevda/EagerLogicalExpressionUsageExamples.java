@@ -10,7 +10,7 @@ import static com.github.evseevda.utils.logic.EagerLogicalExpression.expr;
 import static com.github.evseevda.utils.logic.LogicalPredicates.not;
 
 /**
- * The main goal of this class is to show how to use the features presented in this project.
+ * The main goal of this class is to show how to use class {@code EagerLogicalExpression}.
  * @since 0.9.0
  * @see com.github.evseevda.utils.logic.EagerLogicalExpression
  * @see com.github.evseevda.utils.logic.LogicalPredicates
@@ -22,7 +22,7 @@ public class EagerLogicalExpressionUsageExamples {
      * Shows how {@code EagerLogicalExpression} class can be used
      * @see com.github.evseevda.utils.logic.EagerLogicalExpression
      */
-    public static void eagerLogicalExpressionExamples() {
+    public static void examples() {
         // Example 1
         if (userIsNotLocked() && balance() >= amountNeeded()) {
             System.out.println("Purchase is approved");
