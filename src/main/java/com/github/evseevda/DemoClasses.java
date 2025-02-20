@@ -3,9 +3,11 @@ package com.github.evseevda;
 public class DemoClasses {
 
     static class Human {
+
         public static boolean isGoodMood() {
             return true;
         }
+
     }
 
     static class Bank {
